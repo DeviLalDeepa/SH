@@ -1,0 +1,17 @@
+const{test,expect}=require("@playwright/test")
+test.use({viewport:{height:1000,width:1000}})
+test("Login test",async function({page}){
+await page.goto("https://opensource-demo.orangehrmlive.com/web/index.php/auth/login")
+//await const h=await page.viewportSize().height()
+//await const w=await page.viewportSize().width()
+await console.log(await page.viewportSize().height)
+await console.log(await page.viewportSize().width)
+await  page.getByPlaceholder("Username").pressSequentially("Admin",{delay:200})
+await page.locator("input[name='password']").fill("admin12")
+await page.locator("//button[@type='submit']").click()
+const error =  await page.locator('.oxd-alert-content.oxd-alert-content--error').textContent()
+await console.log(error)
+await expect(error.includes('Invalid')).toBeTruthy()
+expect(error==='Invalid credentials').toBeTruthy()
+}
+)
